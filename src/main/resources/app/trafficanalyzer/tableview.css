@@ -1,0 +1,5 @@
+.table-view  {
+    -fx-selection-bar: lightgreen;
+    -fx-control-inner-background-alt: -fx-control-inner-background;
+    -fx-table-cell-border-color: lightgray;
+}

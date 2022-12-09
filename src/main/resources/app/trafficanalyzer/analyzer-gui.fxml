@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fillWidth="false" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.trafficanalyzer.Controller">
+  <children>
+      <HBox prefHeight="27.0" prefWidth="846.0">
+         <children>
+          <MenuBar prefHeight="27.0" prefWidth="270.0">
+            <menus>
+              <Menu id="import" mnemonicParsing="false" text="File">
+                     <items>
+                        <MenuItem fx:id="Import" mnemonicParsing="false" onAction="#OpenFileImport" text="Import from Hex Dump" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#quit" text="Quit" />
+                     </items>
+                  </Menu>
+              <Menu id="save" mnemonicParsing="false" text="Export">
+                     <items>
+                        <MenuItem fx:id="Export" disable="true" mnemonicParsing="false" onAction="#OpenFileExport" text="Save Frames" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="ExportFG" disable="true" mnemonicParsing="false" onAction="#OpenFileExportFG" text="Save Flow Graph" />
+                     </items>
+                  </Menu>
+                  <Menu id="clear" mnemonicParsing="false" text="Window">
+                     <items>
+                        <MenuItem fx:id="Clear" disable="true" mnemonicParsing="false" onAction="#ClearWindow" text="Clear Window" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="View">
+                    <items>
+                      <MenuItem fx:id="FlowGraphMode" disable="true" mnemonicParsing="false" onAction="#showFlowGraphMode" text="Flow Graph Mode" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="RegularMode" disable="true" mnemonicParsing="false" onAction="#showRegularMode" text="Regular Mode" />
+                    </items>
+                  </Menu>
+              <Menu id="credits" mnemonicParsing="false" text="Help">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#showGuide" text="Guide" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="ShowCredits" mnemonicParsing="false" onAction="#showAbout" text="About" />
+                     </items>
+                  </Menu>
+            </menus>
+          </MenuBar>
+            <Label fx:id="Status" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.0" prefWidth="438.0">
+               <HBox.margin>
+                  <Insets left="25.0" top="2.5" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+    <SplitPane fx:id="splitpane" dividerPositions="0.7" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="741.0" prefWidth="1366.0" VBox.vgrow="ALWAYS">
+      <items>
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="742.0" prefWidth="800.0">
+               <children>
+                  <HBox prefHeight="47.0" prefWidth="600.0">
+                     <children>
+                        <Label fx:id="FilterLabel" disable="true" prefHeight="34.0" prefWidth="54.0" text="Filter" textAlignment="CENTER">
+                           <HBox.margin>
+                              <Insets left="15.0" top="6.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="Filter" disable="true" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#setFilter" prefHeight="34.0" prefWidth="406.0">
+                           <HBox.margin>
+                              <Insets top="6.0" />
+                           </HBox.margin></TextField>
+                        <Label fx:id="Results" prefHeight="34.0" prefWidth="311.0">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="5.0" top="6.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <TableView fx:id="FrameTable" fixedCellSize="100.0" maxWidth="-Infinity" minHeight="572.0" minWidth="600.0" onMouseClicked="#showLayerDetails" prefHeight="695.0" prefWidth="798.0" stylesheets="@tableview.css">
+                    <columns>
+                      <TableColumn fx:id="FrameNumber" prefWidth="40.0" text="No." />
+                        <TableColumn fx:id="FlowNumber" editable="false" prefWidth="40.0" text="Flow" visible="false" />
+                      <TableColumn fx:id="SourceIP" prefWidth="100.0" text="Src IP" />
+                        <TableColumn fx:id="SourcePort" text="Src Port" />
+                        <TableColumn fx:id="Protocol" prefWidth="330.0" text="Protocol" />
+                        <TableColumn fx:id="DestPort" text="Dest Port" />
+                        <TableColumn fx:id="DestIP" prefWidth="100.0" text="Dest IP" />
+                        <TableColumn fx:id="Size" prefWidth="60.0" text="Length" />
+                    </columns>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </TableView>
+               </children>
+            </VBox>
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="739.0" prefWidth="558.0">
+               <children>
+                  <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="557.0">
+                     <children>
+                        <Label fx:id="SelectLayer" disable="true" prefHeight="34.0" prefWidth="94.0" text="Select Layer">
+                           <HBox.margin>
+                              <Insets left="30.0" top="6.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <ButtonBar prefHeight="46.0" prefWidth="422.0">
+                          <buttons>
+                              <Button fx:id="Ethernetbtn" alignment="CENTER" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showEthernet" prefHeight="35.0" prefWidth="175.0" text="Ethernet" visible="false" />
+                            <Button fx:id="IPv4btn" alignment="CENTER" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showIPv4" prefHeight="35.0" prefWidth="175.0" text="IPv4" visible="false" />
+                              <Button fx:id="TCPbtn" alignment="CENTER" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showTCP" prefHeight="35.0" prefWidth="175.0" text="TCP" visible="false" />
+                              <Button fx:id="HTTPbtn" alignment="CENTER" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showHTTP" prefHeight="35.0" prefWidth="175.0" text="HTTP" visible="false" />
+                          </buttons>
+                           <HBox.margin>
+                              <Insets left="7.0" />
+                           </HBox.margin>
+                        </ButtonBar>
+                     </children>
+                  </HBox>
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="434.0" prefWidth="558.0">
+                     <children>
+                        <TextArea fx:id="LayerDetails" editable="false" layoutX="3.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="558.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </TextArea>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="223.0" prefWidth="558.0">
+                     <children>
+                        <TextArea fx:id="RawHexDetails" editable="false" layoutX="2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="223.0" prefWidth="558.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </TextArea>
+                     </children>
+                  </AnchorPane>
+                  <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="558.0">
+                     <children>
+                        <Label fx:id="LayerSize" prefHeight="34.0" prefWidth="470.0">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="50.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+      </items>
+    </SplitPane>
+  </children>
+</VBox>
